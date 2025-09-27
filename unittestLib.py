@@ -1,20 +1,23 @@
 import unittest
-from GeomLib import circle_area, triangle_area
+from GeomLib import Circle, Triangle
 
 class TestGeomLib(unittest.TestCase):
     def test_circle_area(self):
-        self.assertAlmostEqual(circle_area(5), 78.53981633974483)
+        circle = Circle(5)
+        self.assertAlmostEqual(circle.area(), 78.53981633974483)
         with self.assertRaises(ValueError):
-            circle_area(-1)
+            Circle(-1)
         with self.assertRaises(TypeError):
-            circle_area("string")
+            Circle("string")
 
-    def test_triangle_area(self):
-        self.assertAlmostEqual(triangle_area(3, 4, 5), 6.0)
+    def test_triangle_area_and_rectangular_check(self):
+        triangle = Triangle(3, 4, 5)
+        self.assertAlmostEqual(triangle.area(), 6.0)
+        self.assertTrue(triangle.is_right_angled())
         with self.assertRaises(ValueError):
-            triangle_area(1, 1, 3)  # Невозможный треугольник
+            Triangle(1, 1, 3)  # Недопустимый треугольник
         with self.assertRaises(TypeError):
-            triangle_area(3, 4, "five")  # Неверный тип параметра
+            Triangle(3, 4, "five")  # Некорректный тип аргумента
 
 if __name__ == '__main__':
     unittest.main()
